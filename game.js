@@ -57,6 +57,7 @@ function game() {
             playerSelection = prompt("Choose rock, paper, or scissors");
             playerSelection = playerSelection.toLowerCase();
         } while (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors");
+        
         computerSelection = getComputerChoice();
 
         roundWinner = playRound(playerSelection, computerSelection);
