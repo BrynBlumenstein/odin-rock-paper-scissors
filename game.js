@@ -17,76 +17,40 @@ function getComputerChoice() {
     return choice;
 }
 
-function playRound(playerSelection, computerSelection) {
-    let roundWinner;
+function capitalizeFirstLetter(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+function playRound(playerSelection) {
+    let computerSelection = getComputerChoice();
 
     if (playerSelection == "rock" && computerSelection == "scissors" || 
         playerSelection == "paper" && computerSelection == "rock" || 
         playerSelection == "scissors" && computerSelection == "paper") {
 
-        roundWinner = "player";
+        display.textContent = `You win, ${playerSelection} beats ${computerSelection}.`;
+        playerWins++;
 
     } else if (computerSelection == "rock" && playerSelection == "scissors" || 
                 computerSelection == "paper" && playerSelection == "rock" || 
                 computerSelection == "scissors" && playerSelection == "paper") {
 
-        roundWinner = "computer";
+        display.textContent = `You lose, ${computerSelection} beats ${playerSelection}.`;
+        computerWins++;
 
     } else {
-        roundWinner = "none";
-    }
-
-    return roundWinner;
-}
-
-function capitalizeFirstLetter(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-}
-
-function game() {
-    let roundNum = 1;
-    let playerWins = 0;
-    let computerWins = 0;
-    let playerSelection;
-    let computerSelection;
-    let playerSelectionFormatted;
-    let computerSelectionFormatted;
-
-    while (playerWins < 3 && computerWins < 3) {
-        do {
-            playerSelection = prompt("Choose rock, paper, or scissors");
-            playerSelection = playerSelection.toLowerCase();
-        } while (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors");
-        
-        computerSelection = getComputerChoice();
-
-        roundWinner = playRound(playerSelection, computerSelection);
-
-        playerSelectionFormatted = capitalizeFirstLetter(playerSelection);
-        computerSelectionFormatted = capitalizeFirstLetter(computerSelection);
-        
-        switch (roundWinner) {
-            case ("player"):
-                console.log(`You win round ${roundNum}! ${playerSelectionFormatted} beats ${computerSelectionFormatted}`);
-                playerWins++;
-                roundNum++;
-                break;
-            case ("computer"):
-                console.log(`You lose round ${roundNum}! ${computerSelectionFormatted} beats ${playerSelectionFormatted}`);
-                computerWins++;
-                roundNum++;
-                break;
-            case ("none"):
-                console.log(`Tie! Choose again`);
-                break;
-        }
-    }
-
-    if (playerWins > computerWins) {
-        console.log(`You win the best-of-five game!`);
-    } else {
-        console.log(`You lose the best-of-five game!`);
+        display.textContent =`Draw.`;
     }
 }
 
-game();
+let playerWins = 0;
+let computerWins = 0;
+
+const display = document.querySelector('#display');
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playRound(button.id);
+    });
+});
