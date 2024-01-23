@@ -17,8 +17,15 @@ function getComputerChoice() {
     return choice;
 }
 
-function capitalizeFirstLetter(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
+function endGame() {
+    buttons.forEach((button) => {
+        button.disabled = true;
+    });
+    if (playerWins > computerWins) {
+        display.innerHTML = 'Player won.'
+    } else {
+        display.innerHTML = 'Computer won.'
+    }
 }
 
 function playRound(playerSelection) {
@@ -28,18 +35,28 @@ function playRound(playerSelection) {
         playerSelection == "paper" && computerSelection == "rock" || 
         playerSelection == "scissors" && computerSelection == "paper") {
 
-        display.textContent = `You win, ${playerSelection} beats ${computerSelection}.`;
         playerWins++;
+        display.innerHTML = `You win, ${playerSelection} beats ${computerSelection}.
+                         <br>Player wins: ${playerWins}
+                         <br>Computer wins: ${computerWins}`;
 
     } else if (computerSelection == "rock" && playerSelection == "scissors" || 
-                computerSelection == "paper" && playerSelection == "rock" || 
-                computerSelection == "scissors" && playerSelection == "paper") {
+               computerSelection == "paper" && playerSelection == "rock" || 
+               computerSelection == "scissors" && playerSelection == "paper") {
 
-        display.textContent = `You lose, ${computerSelection} beats ${playerSelection}.`;
         computerWins++;
+        display.innerHTML = `You lose, ${computerSelection} beats ${playerSelection}.
+                         <br>Player wins: ${playerWins}
+                         <br>Computer wins: ${computerWins}`;
 
     } else {
-        display.textContent =`Draw.`;
+        display.innerHTML =`Draw.
+                        <br>Player wins: ${playerWins}
+                        <br>Computer wins: ${computerWins}`;
+    }
+
+    if (playerWins >= 5 || computerWins >= 5) {
+        endGame();
     }
 }
 
@@ -54,3 +71,4 @@ buttons.forEach((button) => {
         playRound(button.id);
     });
 });
+
